@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
+import Link from "next/link";
 import { Menu, X } from "lucide-react";
 
 export default function HeroPage() {
@@ -28,9 +29,11 @@ export default function HeroPage() {
           {!isMobile ? (
             <nav>
               <ul className="flex gap-6 text-lg">
-                {["About", "Skills", "Portfolio", "Layanan", "Kontak"].map((item, index) => (
+                {["Home", "About", "Skills", "Portfolio", "Layanan", "Kontak"].map((item, index) => (
                   <li key={index} className="relative group cursor-pointer transition-all duration-300">
-                    <span className="hover:text-blue-400 transition duration-300">{item}</span>
+                    <Link href={`/${item.toLowerCase()}`} className="hover:text-blue-400 transition duration-300">
+                      {item}
+                    </Link>
                     <span className="absolute left-0 bottom-0 w-0 h-[2px] bg-blue-400 transition-all duration-300 group-hover:w-full"></span>
                   </li>
                 ))}
@@ -46,8 +49,10 @@ export default function HeroPage() {
         {isMobile && menuOpen && (
           <nav className="bg-gray-800/90 text-white mt-3 py-4 rounded-lg shadow-md transition-all duration-300">
             <ul className="flex flex-col items-center gap-4 text-lg">
-              {["About", "Skills", "Portfolio", "Layanan", "Kontak"].map((item, index) => (
-                <li key={index} className="hover:text-blue-400 transition duration-300 cursor-pointer">{item}</li>
+              {["Home", "About", "Skills", "Portfolio", "Layanan", "Kontak"].map((item, index) => (
+                <li key={index} className="hover:text-blue-400 transition duration-300 cursor-pointer">
+                  <Link href={`/${item.toLowerCase()}`}>{item}</Link>
+                </li>
               ))}
             </ul>
           </nav>

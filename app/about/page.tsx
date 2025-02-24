@@ -1,10 +1,11 @@
 "use client";
 
-import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
+import Link from "next/link";
 import { Menu, X } from "lucide-react";
+import { useState, useEffect } from "react";
 
-export default function HeroPage() {
+export default function AboutPage() {
   const [isMobile, setIsMobile] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -28,9 +29,11 @@ export default function HeroPage() {
           {!isMobile ? (
             <nav>
               <ul className="flex gap-6 text-lg">
-                {["About", "Skills", "Portfolio", "Layanan", "Kontak"].map((item, index) => (
+                {["Home", "About", "Skills", "Portfolio", "Layanan", "Kontak"].map((item, index) => (
                   <li key={index} className="relative group cursor-pointer transition-all duration-300">
-                    <span className="hover:text-blue-400 transition duration-300">{item}</span>
+                    <Link href={`/${item.toLowerCase()}`} className="hover:text-blue-400 transition duration-300">
+                      {item}
+                    </Link>
                     <span className="absolute left-0 bottom-0 w-0 h-[2px] bg-blue-400 transition-all duration-300 group-hover:w-full"></span>
                   </li>
                 ))}
@@ -46,22 +49,24 @@ export default function HeroPage() {
         {isMobile && menuOpen && (
           <nav className="bg-gray-800/90 text-white mt-3 py-4 rounded-lg shadow-md transition-all duration-300">
             <ul className="flex flex-col items-center gap-4 text-lg">
-              {["About", "Skills", "Portfolio", "Layanan", "Kontak"].map((item, index) => (
-                <li key={index} className="hover:text-blue-400 transition duration-300 cursor-pointer">{item}</li>
+              {["Home", "About", "Skills", "Portfolio", "Layanan", "Kontak"].map((item, index) => (
+                <li key={index} className="hover:text-blue-400 transition duration-300 cursor-pointer">
+                  <Link href={`/${item.toLowerCase()}`}>{item}</Link>
+                </li>
               ))}
             </ul>
           </nav>
         )}
       </header>
 
-      {/* Hero Section */}
+      {/* About Section */}
       <section className="flex flex-col items-center text-center px-6 mt-24 relative">
         {/* Background Glow Effect */}
-        <div className="absolute w-[400px] h-[400px] bg-blue-500 opacity-30 blur-3xl rounded-full top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"></div>
+        <div className="absolute w-[400px] h-[400px] bg-purple-500 opacity-30 blur-3xl rounded-full top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"></div>
 
-        {/* Profile Image with Parallax Effect */}
+        {/* Profile Image with Animation */}
         <motion.img
-          src="/your-photo.jpg" // Ganti dengan URL gambar profil kamu
+          src="/your-photo.jpg" // Ganti dengan gambar profil
           alt="Profile"
           className="w-40 h-40 rounded-full shadow-2xl border-4 border-blue-400 object-cover"
           initial={{ y: -20, opacity: 0 }}
@@ -71,35 +76,47 @@ export default function HeroPage() {
 
         {/* Title & Subtitle */}
         <motion.h1
-          className="text-5xl font-extrabold mt-6 text-white bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 bg-clip-text text-transparent"
+          className="text-5xl font-extrabold mt-6 text-white bg-gradient-to-r from-purple-400 via-blue-500 to-pink-500 bg-clip-text text-transparent"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2, duration: 0.8 }}
         >
-          Reza Ryandi Maulana
+          About Me
         </motion.h1>
         <motion.p
-          className="text-lg text-gray-300 mt-2"
+          className="text-lg text-gray-300 mt-2 max-w-3xl"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4, duration: 0.8 }}
         >
-          Web Developer | UI/UX Designer | Freelancer
+          Saya adalah seorang Web Developer, UI/UX Designer, dan Freelancer yang berfokus pada pengembangan website modern dan responsif. Dengan pengalaman dalam teknologi terbaru, saya berusaha untuk menciptakan solusi digital yang inovatif dan berkualitas tinggi.
         </motion.p>
 
-        {/* CTA Buttons */}
+        {/* More Details */}
         <motion.div
-          className="flex gap-4 mt-6"
+          className="mt-8 text-left max-w-3xl"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.6, duration: 0.8 }}
         >
-          <button className="bg-gradient-to-r from-blue-500 to-purple-500 hover:from-purple-500 hover:to-blue-500 text-white py-3 px-6 rounded-xl shadow-lg transition duration-300 transform hover:scale-105">
-            Hire Me
-          </button>
-          <button className="border border-blue-400 text-blue-400 hover:bg-blue-400 hover:text-white py-3 px-6 rounded-xl shadow-lg transition duration-300 transform hover:scale-105">
-            Download CV
-          </button>
+          <h2 className="text-2xl font-semibold text-blue-400">My Journey</h2>
+          <p className="text-gray-300 mt-2">
+            Saya memulai perjalanan dalam dunia pengembangan web sejak beberapa tahun yang lalu. Dengan minat dalam desain UI/UX dan keamanan siber, saya mengembangkan berbagai proyek mulai dari sistem informasi hingga aplikasi berbasis Next.js dan JavaFX.
+          </p>
+        </motion.div>
+
+        {/* CTA Button */}
+        <motion.div
+          className="mt-6"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.8, duration: 0.8 }}
+        >
+          <Link href="/portfolio">
+            <button className="bg-gradient-to-r from-blue-500 to-purple-500 hover:from-purple-500 hover:to-blue-500 text-white py-3 px-6 rounded-xl shadow-lg transition duration-300 transform hover:scale-105">
+              Lihat Portfolio
+            </button>
+          </Link>
         </motion.div>
       </section>
 
@@ -108,7 +125,7 @@ export default function HeroPage() {
         {[...Array(10)].map((_, i) => (
           <motion.div
             key={i}
-            className="absolute w-2 h-2 bg-blue-400 rounded-full opacity-50"
+            className="absolute w-2 h-2 bg-purple-400 rounded-full opacity-50"
             initial={{ y: "100vh", x: Math.random() * window.innerWidth }}
             animate={{ y: "-10vh", x: Math.random() * window.innerWidth }}
             transition={{ duration: Math.random() * 6 + 4, repeat: Infinity, ease: "linear" }}

@@ -1,10 +1,11 @@
 "use client";
 
-import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
+import Link from "next/link";
 import { Menu, X } from "lucide-react";
+import { useState, useEffect } from "react";
 
-export default function HeroPage() {
+export default function KontakPage() {
   const [isMobile, setIsMobile] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -28,9 +29,11 @@ export default function HeroPage() {
           {!isMobile ? (
             <nav>
               <ul className="flex gap-6 text-lg">
-                {["About", "Skills", "Portfolio", "Layanan", "Kontak"].map((item, index) => (
+                {["Home", "About", "Skills", "Portfolio", "Layanan", "Kontak"].map((item, index) => (
                   <li key={index} className="relative group cursor-pointer transition-all duration-300">
-                    <span className="hover:text-blue-400 transition duration-300">{item}</span>
+                    <Link href={`/${item.toLowerCase()}`} className="hover:text-blue-400 transition duration-300">
+                      {item}
+                    </Link>
                     <span className="absolute left-0 bottom-0 w-0 h-[2px] bg-blue-400 transition-all duration-300 group-hover:w-full"></span>
                   </li>
                 ))}
@@ -46,37 +49,29 @@ export default function HeroPage() {
         {isMobile && menuOpen && (
           <nav className="bg-gray-800/90 text-white mt-3 py-4 rounded-lg shadow-md transition-all duration-300">
             <ul className="flex flex-col items-center gap-4 text-lg">
-              {["About", "Skills", "Portfolio", "Layanan", "Kontak"].map((item, index) => (
-                <li key={index} className="hover:text-blue-400 transition duration-300 cursor-pointer">{item}</li>
+              {["Home", "About", "Skills", "Portfolio", "Layanan", "Kontak"].map((item, index) => (
+                <li key={index} className="hover:text-blue-400 transition duration-300 cursor-pointer">
+                  <Link href={`/${item.toLowerCase()}`}>{item}</Link>
+                </li>
               ))}
             </ul>
           </nav>
         )}
       </header>
 
-      {/* Hero Section */}
+      {/* Kontak Section */}
       <section className="flex flex-col items-center text-center px-6 mt-24 relative">
         {/* Background Glow Effect */}
         <div className="absolute w-[400px] h-[400px] bg-blue-500 opacity-30 blur-3xl rounded-full top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"></div>
 
-        {/* Profile Image with Parallax Effect */}
-        <motion.img
-          src="/your-photo.jpg" // Ganti dengan URL gambar profil kamu
-          alt="Profile"
-          className="w-40 h-40 rounded-full shadow-2xl border-4 border-blue-400 object-cover"
-          initial={{ y: -20, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-        />
-
-        {/* Title & Subtitle */}
+        {/* Title */}
         <motion.h1
           className="text-5xl font-extrabold mt-6 text-white bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 bg-clip-text text-transparent"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2, duration: 0.8 }}
         >
-          Reza Ryandi Maulana
+          Kontak
         </motion.h1>
         <motion.p
           className="text-lg text-gray-300 mt-2"
@@ -84,37 +79,55 @@ export default function HeroPage() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4, duration: 0.8 }}
         >
-          Web Developer | UI/UX Designer | Freelancer
+          Hubungi saya untuk kerja sama dalam UI/UX Web Development dan Photoshop Design.
         </motion.p>
 
-        {/* CTA Buttons */}
-        <motion.div
-          className="flex gap-4 mt-6"
+        {/* Contact Form */}
+        <motion.form
+          className="bg-gray-800 p-6 rounded-lg shadow-lg mt-6 w-full max-w-lg flex flex-col gap-4"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.6, duration: 0.8 }}
         >
-          <button className="bg-gradient-to-r from-blue-500 to-purple-500 hover:from-purple-500 hover:to-blue-500 text-white py-3 px-6 rounded-xl shadow-lg transition duration-300 transform hover:scale-105">
-            Hire Me
+          <input
+            type="text"
+            placeholder="Nama"
+            className="bg-gray-700 text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+            required
+          />
+          <input
+            type="email"
+            placeholder="Email"
+            className="bg-gray-700 text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+            required
+          />
+          <textarea
+            placeholder="Pesan"
+            rows="4"
+            className="bg-gray-700 text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+            required
+          ></textarea>
+          <button
+            type="submit"
+            className="bg-gradient-to-r from-blue-500 to-purple-500 hover:from-purple-500 hover:to-blue-500 text-white py-3 px-6 rounded-xl shadow-lg transition duration-300 transform hover:scale-105"
+          >
+            Kirim Pesan
           </button>
-          <button className="border border-blue-400 text-blue-400 hover:bg-blue-400 hover:text-white py-3 px-6 rounded-xl shadow-lg transition duration-300 transform hover:scale-105">
-            Download CV
-          </button>
+        </motion.form>
+
+        {/* Contact Info */}
+        <motion.div
+          className="mt-6 flex flex-col items-center gap-4 text-gray-300"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.8, duration: 0.8 }}
+        >
+          <p>Email: <span className="text-blue-400">your.email@example.com</span></p>
+          <p>WhatsApp: <span className="text-blue-400">+62 812 3456 7890</span></p>
+          <p>LinkedIn: <Link href="https://linkedin.com/in/yourprofile" className="text-blue-400 hover:underline">linkedin.com/in/yourprofile</Link></p>
+          <p>GitHub: <Link href="https://github.com/yourgithub" className="text-blue-400 hover:underline">github.com/yourgithub</Link></p>
         </motion.div>
       </section>
-
-      {/* Floating Glow Particles */}
-      <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
-        {[...Array(10)].map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute w-2 h-2 bg-blue-400 rounded-full opacity-50"
-            initial={{ y: "100vh", x: Math.random() * window.innerWidth }}
-            animate={{ y: "-10vh", x: Math.random() * window.innerWidth }}
-            transition={{ duration: Math.random() * 6 + 4, repeat: Infinity, ease: "linear" }}
-          />
-        ))}
-      </div>
     </div>
   );
 }

@@ -1,10 +1,11 @@
 "use client";
 
-import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
+import Link from "next/link";
 import { Menu, X } from "lucide-react";
+import { useState, useEffect } from "react";
 
-export default function HeroPage() {
+export default function SkillsPage() {
   const [isMobile, setIsMobile] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -18,6 +19,17 @@ export default function HeroPage() {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
+  const skills = [
+    { name: "HTML", level: "Advanced" },
+    { name: "CSS & Tailwind", level: "Advanced" },
+    { name: "JavaScript", level: "Advanced" },
+    { name: "React.js & Next.js", level: "Advanced" },
+    { name: "Java & JavaFX", level: "Intermediate" },
+    { name: "PL/SQL & MySQL", level: "Intermediate" },
+    { name: "UI/UX Design", level: "Intermediate" },
+    
+  ];
+
   return (
     <div className="bg-gray-900 min-h-screen text-white flex flex-col items-center justify-center relative overflow-hidden">
       {/* Navbar */}
@@ -28,9 +40,11 @@ export default function HeroPage() {
           {!isMobile ? (
             <nav>
               <ul className="flex gap-6 text-lg">
-                {["About", "Skills", "Portfolio", "Layanan", "Kontak"].map((item, index) => (
+                {["Home", "About", "Skills", "Portfolio", "Layanan", "Kontak"].map((item, index) => (
                   <li key={index} className="relative group cursor-pointer transition-all duration-300">
-                    <span className="hover:text-blue-400 transition duration-300">{item}</span>
+                    <Link href={`/${item.toLowerCase()}`} className="hover:text-blue-400 transition duration-300">
+                      {item}
+                    </Link>
                     <span className="absolute left-0 bottom-0 w-0 h-[2px] bg-blue-400 transition-all duration-300 group-hover:w-full"></span>
                   </li>
                 ))}
@@ -46,60 +60,72 @@ export default function HeroPage() {
         {isMobile && menuOpen && (
           <nav className="bg-gray-800/90 text-white mt-3 py-4 rounded-lg shadow-md transition-all duration-300">
             <ul className="flex flex-col items-center gap-4 text-lg">
-              {["About", "Skills", "Portfolio", "Layanan", "Kontak"].map((item, index) => (
-                <li key={index} className="hover:text-blue-400 transition duration-300 cursor-pointer">{item}</li>
+              {["Home", "About", "Skills", "Portfolio", "Layanan", "Kontak"].map((item, index) => (
+                <li key={index} className="hover:text-blue-400 transition duration-300 cursor-pointer">
+                  <Link href={`/${item.toLowerCase()}`}>{item}</Link>
+                </li>
               ))}
             </ul>
           </nav>
         )}
       </header>
 
-      {/* Hero Section */}
+      {/* Skills Section */}
       <section className="flex flex-col items-center text-center px-6 mt-24 relative">
         {/* Background Glow Effect */}
         <div className="absolute w-[400px] h-[400px] bg-blue-500 opacity-30 blur-3xl rounded-full top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"></div>
 
-        {/* Profile Image with Parallax Effect */}
-        <motion.img
-          src="/your-photo.jpg" // Ganti dengan URL gambar profil kamu
-          alt="Profile"
-          className="w-40 h-40 rounded-full shadow-2xl border-4 border-blue-400 object-cover"
-          initial={{ y: -20, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-        />
-
-        {/* Title & Subtitle */}
+        {/* Section Title */}
         <motion.h1
           className="text-5xl font-extrabold mt-6 text-white bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 bg-clip-text text-transparent"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2, duration: 0.8 }}
         >
-          Reza Ryandi Maulana
+          My Skills
         </motion.h1>
         <motion.p
-          className="text-lg text-gray-300 mt-2"
+          className="text-lg text-gray-300 mt-2 max-w-3xl"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4, duration: 0.8 }}
         >
-          Web Developer | UI/UX Designer | Freelancer
+          Berikut adalah beberapa keahlian saya dalam pengembangan web, UI/UX.
         </motion.p>
 
-        {/* CTA Buttons */}
+        {/* Skills List */}
         <motion.div
-          className="flex gap-4 mt-6"
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8 max-w-4xl"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.6, duration: 0.8 }}
         >
-          <button className="bg-gradient-to-r from-blue-500 to-purple-500 hover:from-purple-500 hover:to-blue-500 text-white py-3 px-6 rounded-xl shadow-lg transition duration-300 transform hover:scale-105">
-            Hire Me
-          </button>
-          <button className="border border-blue-400 text-blue-400 hover:bg-blue-400 hover:text-white py-3 px-6 rounded-xl shadow-lg transition duration-300 transform hover:scale-105">
-            Download CV
-          </button>
+          {skills.map((skill, index) => (
+            <motion.div
+              key={index}
+              className="bg-gray-800 p-6 rounded-xl shadow-lg flex flex-col items-center justify-center transform hover:scale-105 transition duration-300"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 * index, duration: 0.8 }}
+            >
+              <h3 className="text-2xl font-semibold text-blue-400">{skill.name}</h3>
+              <p className="text-gray-300 mt-2">{skill.level}</p>
+            </motion.div>
+          ))}
+        </motion.div>
+
+        {/* CTA Button */}
+        <motion.div
+          className="mt-6"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.8, duration: 0.8 }}
+        >
+          <Link href="/portfolio">
+            <button className="bg-gradient-to-r from-blue-500 to-purple-500 hover:from-purple-500 hover:to-blue-500 text-white py-3 px-6 rounded-xl shadow-lg transition duration-300 transform hover:scale-105">
+              Lihat Portfolio
+            </button>
+          </Link>
         </motion.div>
       </section>
 
