@@ -8,15 +8,22 @@ import { useState, useEffect } from "react";
 export default function SkillsPage() {
   const [isMobile, setIsMobile] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [screenWidth, setScreenWidth] = useState(0); // Inisialisasi dengan 0
 
   useEffect(() => {
-    const handleResize = () => {
+    // Pastikan window hanya diakses di client-side
+    if (typeof window !== "undefined") {
+      setScreenWidth(window.innerWidth);
       setIsMobile(window.innerWidth < 1024);
-    };
 
-    handleResize();
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
+      const handleResize = () => {
+        setScreenWidth(window.innerWidth);
+        setIsMobile(window.innerWidth < 1024);
+      };
+
+      window.addEventListener("resize", handleResize);
+      return () => window.removeEventListener("resize", handleResize);
+    }
   }, []);
 
   const skills = [
@@ -27,7 +34,6 @@ export default function SkillsPage() {
     { name: "Java & JavaFX", level: "Intermediate" },
     { name: "PL/SQL & MySQL", level: "Intermediate" },
     { name: "UI/UX Design", level: "Intermediate" },
-    
   ];
 
   return (
@@ -113,20 +119,6 @@ export default function SkillsPage() {
             </motion.div>
           ))}
         </motion.div>
-
-        {/* CTA Button */}
-        <motion.div
-          className="mt-6"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.8, duration: 0.8 }}
-        >
-          <Link href="/portfolio">
-            <button className="bg-gradient-to-r from-blue-500 to-purple-500 hover:from-purple-500 hover:to-blue-500 text-white py-3 px-6 rounded-xl shadow-lg transition duration-300 transform hover:scale-105">
-              Lihat Portfolio
-            </button>
-          </Link>
-        </motion.div>
       </section>
 
       {/* Floating Glow Particles */}
@@ -135,8 +127,8 @@ export default function SkillsPage() {
           <motion.div
             key={i}
             className="absolute w-2 h-2 bg-blue-400 rounded-full opacity-50"
-            initial={{ y: "100vh", x: Math.random() * window.innerWidth }}
-            animate={{ y: "-10vh", x: Math.random() * window.innerWidth }}
+            initial={{ y: "100vh", x: Math.random() * screenWidth }}
+            animate={{ y: "-10vh", x: Math.random() * screenWidth }}
             transition={{ duration: Math.random() * 6 + 4, repeat: Infinity, ease: "linear" }}
           />
         ))}
