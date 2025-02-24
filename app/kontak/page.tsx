@@ -101,8 +101,12 @@ export default function KontakPage() {
             className="bg-gray-700 text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
             required
           />
-          <textarea rows={4} />
-</textarea>
+          <textarea
+            placeholder="Pesan"
+            rows={4} // ✅ Perbaikan dari "rows='4'"
+            className="bg-gray-700 text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+            required
+          ></textarea>
           <button
             type="submit"
             className="bg-gradient-to-r from-blue-500 to-purple-500 hover:from-purple-500 hover:to-blue-500 text-white py-3 px-6 rounded-xl shadow-lg transition duration-300 transform hover:scale-105"
