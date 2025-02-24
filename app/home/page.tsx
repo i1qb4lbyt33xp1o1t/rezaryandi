@@ -8,15 +8,17 @@ import { Menu, X } from "lucide-react";
 export default function HeroPage() {
   const [isMobile, setIsMobile] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [windowWidth, setWindowWidth] = useState<number | null>(null);
 
   useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth < 1024);
-    };
+    if (typeof window !== "undefined") {
+      setWindowWidth(window.innerWidth);
 
-    handleResize();
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
+      const handleResize = () => setWindowWidth(window.innerWidth);
+      window.addEventListener("resize", handleResize);
+
+      return () => window.removeEventListener("resize", handleResize);
+    }
   }, []);
 
   return (
@@ -109,17 +111,19 @@ export default function HeroPage() {
       </section>
 
       {/* Floating Glow Particles */}
-      <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
-        {[...Array(10)].map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute w-2 h-2 bg-blue-400 rounded-full opacity-50"
-            initial={{ y: "100vh", x: Math.random() * window.innerWidth }}
-            animate={{ y: "-10vh", x: Math.random() * window.innerWidth }}
-            transition={{ duration: Math.random() * 6 + 4, repeat: Infinity, ease: "linear" }}
-          />
-        ))}
-      </div>
+      {windowWidth !== null && (
+        <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
+          {[...Array(10)].map((_, i) => (
+            <motion.div
+              key={i}
+              className="absolute w-2 h-2 bg-blue-400 rounded-full opacity-50"
+              initial={{ y: "100vh", x: Math.random() * windowWidth }}
+              animate={{ y: "-10vh", x: Math.random() * windowWidth }}
+              transition={{ duration: Math.random() * 6 + 4, repeat: Infinity, ease: "linear" }}
+            />
+          ))}
+        </div>
+      )}
     </div>
   );
 }
