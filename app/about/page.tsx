@@ -8,15 +8,19 @@ import { useState, useEffect } from "react";
 export default function AboutPage() {
   const [isMobile, setIsMobile] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [windowWidth, setWindowWidth] = useState<number | null>(null);
 
   useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth < 1024);
-    };
+    if (typeof window !== "undefined") {
+      const handleResize = () => {
+        setIsMobile(window.innerWidth < 1024);
+        setWindowWidth(window.innerWidth); // Pastikan window tersedia
+      };
 
-    handleResize();
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
+      handleResize();
+      window.addEventListener("resize", handleResize);
+      return () => window.removeEventListener("resize", handleResize);
+    }
   }, []);
 
   return (
@@ -121,17 +125,19 @@ export default function AboutPage() {
       </section>
 
       {/* Floating Glow Particles */}
-      <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
-        {[...Array(10)].map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute w-2 h-2 bg-purple-400 rounded-full opacity-50"
-            initial={{ y: "100vh", x: Math.random() * window.innerWidth }}
-            animate={{ y: "-10vh", x: Math.random() * window.innerWidth }}
-            transition={{ duration: Math.random() * 6 + 4, repeat: Infinity, ease: "linear" }}
-          />
-        ))}
-      </div>
+      {windowWidth && (
+        <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
+          {[...Array(10)].map((_, i) => (
+            <motion.div
+              key={i}
+              className="absolute w-2 h-2 bg-purple-400 rounded-full opacity-50"
+              initial={{ y: "100vh", x: Math.random() * windowWidth }}
+              animate={{ y: "-10vh", x: Math.random() * windowWidth }}
+              transition={{ duration: Math.random() * 6 + 4, repeat: Infinity, ease: "linear" }}
+            />
+          ))}
+        </div>
+      )}
     </div>
   );
 }
